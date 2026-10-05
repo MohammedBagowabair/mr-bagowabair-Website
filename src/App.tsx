@@ -36,8 +36,9 @@ export default function App() {
   return (
     <>
       <header className="top">
-        <a className="logo" href="#top">
-          mr.<b>bagowabair</b>
+        <a className="logo" href="#top" aria-label="mr.bagowabair home">
+          <img className="logo-mark" src={`${import.meta.env.BASE_URL}logo.svg`} alt="" width={28} height={28} />
+          <span className="logo-word">mr.<b>bagowabair</b></span>
         </a>
         <a className="top-wa" href={waLink("Hi — I want a website like one of your templates.")}>
           WhatsApp

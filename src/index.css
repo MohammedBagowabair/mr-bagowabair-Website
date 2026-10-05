@@ -75,9 +75,24 @@ a {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
   color: var(--mute);
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+
+.logo-word b {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .logo b {
