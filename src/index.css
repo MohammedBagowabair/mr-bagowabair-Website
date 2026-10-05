@@ -27,6 +27,12 @@ html {
   scroll-behavior: smooth;
 }
 
+body.modal-open .sticky-wa {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
 body {
   margin: 0;
   font-family: var(--font);
@@ -375,26 +381,27 @@ a {
   box-shadow: 0 14px 34px rgba(37, 211, 102, 0.28);
 }
 
-/* Modal — screenshots only, no iframe */
+/* Modal */
 .backdrop {
   position: fixed;
   inset: 0;
-  z-index: 80;
-  background: rgba(5, 4, 3, 0.78);
-  backdrop-filter: blur(8px);
+  z-index: 200;
+  background: rgba(5, 4, 3, 0.82);
+  backdrop-filter: blur(10px);
   display: grid;
   place-items: end center;
   padding: 0;
 }
 
 .modal {
-  width: min(100%, 980px);
-  max-height: min(94vh, 900px);
+  width: min(100%, 1080px);
+  height: min(94vh, 920px);
+  max-height: min(94vh, 920px);
   background: var(--paper);
   border: 1px solid var(--line-2);
   border-radius: 18px 18px 0 0;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr);
   overflow: hidden;
   box-shadow: var(--shadow);
   animation: up 0.28s var(--ease);
@@ -462,16 +469,87 @@ a {
   border-color: var(--sand);
 }
 
+.tabs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.tab {
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  color: var(--mute);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.tab.on {
+  background: var(--sand);
+  border-color: var(--sand);
+  color: #0c0b0a;
+}
+
 .modal-body {
+  min-height: 0;
   overflow: auto;
-  padding: 1rem;
+  padding: 0;
   display: grid;
-  gap: 1rem;
   background: #100e0c;
 }
 
+.live-wrap {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+}
+
+.live-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 60vh;
+  border: 0;
+  background: #fff;
+}
+
+.live-status {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(12, 11, 10, 0.92);
+  border: 1px solid var(--line-2);
+  color: var(--ink);
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+
+.live-status.warn {
+  white-space: normal;
+  max-width: min(92%, 420px);
+  text-align: center;
+  border-radius: 12px;
+}
+
+.linkish {
+  color: var(--sand);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.live-status a {
+  color: var(--sand);
+  font-weight: 600;
+}
+
 .note {
-  margin: 0;
+  margin: 1rem 1rem 0;
   padding: 0.7rem 0.85rem;
   border-radius: 10px;
   background: var(--paper);
@@ -488,6 +566,7 @@ a {
 .shots {
   display: grid;
   gap: 1rem;
+  padding: 1rem;
 }
 
 .shots figure {
@@ -513,6 +592,13 @@ a {
   object-position: top center;
 }
 
+.shots img.broken {
+  min-height: 180px;
+  background:
+    linear-gradient(135deg, #1a1714, #0a0908),
+    repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(232, 195, 154, 0.08) 8px, rgba(232, 195, 154, 0.08) 16px);
+}
+
 .shots figure:not(.m) img {
   aspect-ratio: 16 / 10;
 }
@@ -525,6 +611,11 @@ a {
 .shots .m img {
   aspect-ratio: 9 / 18;
   border-radius: 18px;
+}
+
+.modal-body > .btn.wide {
+  margin: 0 1rem 1rem;
+  width: calc(100% - 2rem);
 }
 
 @media (min-width: 720px) {
@@ -553,6 +644,7 @@ a {
 
   .modal {
     border-radius: 16px;
+    height: min(88vh, 860px);
     max-height: min(88vh, 860px);
   }
 
@@ -566,10 +658,16 @@ a {
     margin-inline: 0;
   }
 
-  .modal-body .btn.wide {
+  .modal-body > .btn.wide {
     justify-self: end;
     width: auto;
     min-width: 200px;
+    margin-left: auto;
+    margin-right: 1rem;
+  }
+
+  .live-frame {
+    min-height: 0;
   }
 }
 

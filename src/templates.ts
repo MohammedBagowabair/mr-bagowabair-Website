@@ -7,11 +7,13 @@ export type Template = {
   tags: string[];
   palette: string[];
   vibe: string;
+  /** Relative to site base, e.g. shots/vista-desktop.png */
   desktop: string;
   mobile: string;
 };
 
-const shot = (name: string) => `${import.meta.env.BASE_URL}shots/${name}`;
+/** Store paths WITHOUT base — App resolves with import.meta.env.BASE_URL */
+const shot = (name: string) => `shots/${name}`;
 
 export const templates: Template[] = [
   {
