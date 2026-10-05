@@ -1,18 +1,20 @@
 :root {
-  --bg: #fafaf8;
-  --paper: #ffffff;
-  --ink: #141414;
-  --mute: #6b6b66;
-  --line: #ebebe6;
-  --line-2: #dddcd6;
-  --accent: #1a1a1a;
-  --wa: #128c7e;
+  --bg: #0c0b0a;
+  --paper: #161412;
+  --ink: #f6f1ea;
+  --mute: #9a9085;
+  --line: rgba(246, 241, 234, 0.1);
+  --line-2: rgba(246, 241, 234, 0.18);
+  --sand: #e8c39a;
+  --sand-hot: #f0d4b0;
+  --wa: #25d366;
   --radius: 14px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --pad: clamp(1rem, 3vw, 2rem);
   --max: 1120px;
   --font: "DM Sans", system-ui, -apple-system, sans-serif;
   --serif: "Fraunces", Georgia, serif;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
 *,
@@ -69,9 +71,9 @@ a {
   max-width: var(--max);
   margin: 0 auto;
   padding: 0.95rem var(--pad);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid transparent;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
 }
 
 .logo {
@@ -88,15 +90,16 @@ a {
   height: 28px;
   border-radius: 7px;
   flex-shrink: 0;
+  border: 1px solid rgba(232, 195, 154, 0.25);
 }
 
 .logo-word b {
-  color: var(--ink);
+  color: var(--sand);
   font-weight: 600;
 }
 
 .logo b {
-  color: var(--ink);
+  color: var(--sand);
   font-weight: 600;
 }
 
@@ -105,15 +108,34 @@ a {
   font-weight: 600;
   padding: 0.55rem 0.95rem;
   border-radius: 999px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--sand);
+  color: #0c0b0a;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.top-wa:hover {
+  background: var(--sand-hot);
+  transform: translateY(-1px);
 }
 
 /* Hero */
 .hero {
+  position: relative;
   max-width: var(--max);
   margin: 0 auto;
   padding: clamp(2rem, 6vw, 3.5rem) var(--pad) 1.25rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% auto auto 55%;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 195, 154, 0.14), transparent 65%);
+  pointer-events: none;
 }
 
 .kicker {
@@ -121,7 +143,7 @@ a {
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: var(--sand);
   font-weight: 500;
 }
 
@@ -133,6 +155,7 @@ a {
   line-height: 1.15;
   letter-spacing: -0.025em;
   max-width: 16ch;
+  color: var(--ink);
 }
 
 .lead {
@@ -167,17 +190,22 @@ a {
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
   border: 1px solid var(--line-2);
-  background: var(--paper);
+  background: transparent;
   color: var(--mute);
   font-size: 0.84rem;
   font-weight: 500;
   transition: background 0.2s var(--ease), color 0.2s, border-color 0.2s;
 }
 
+.chip:hover {
+  color: var(--ink);
+  border-color: rgba(232, 195, 154, 0.4);
+}
+
 .chip.on {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: #fff;
+  background: var(--sand);
+  border-color: var(--sand);
+  color: #0c0b0a;
 }
 
 .grid {
@@ -191,6 +219,13 @@ a {
   border-radius: calc(var(--radius) + 4px);
   overflow: hidden;
   display: grid;
+  transition: border-color 0.25s, transform 0.35s var(--ease), box-shadow 0.35s;
+}
+
+.card:hover {
+  border-color: rgba(232, 195, 154, 0.35);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
 }
 
 .card-shot {
@@ -198,16 +233,18 @@ a {
   display: block;
   width: 100%;
   padding: 1rem 1rem 0.35rem;
-  background: linear-gradient(180deg, #f3f2ed 0%, #ebeae4 100%);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(232, 195, 154, 0.08), transparent 45%),
+    linear-gradient(160deg, #1a1714, #100e0c 70%);
   text-align: left;
 }
 
 .desk {
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid var(--line-2);
-  background: #111;
-  box-shadow: 0 12px 28px rgba(20, 20, 20, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0a0908;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
 .desk img {
@@ -224,9 +261,9 @@ a {
   width: min(28%, 108px);
   padding: 5px;
   border-radius: 14px;
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  background: #0a0908;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
 }
 
 .phone img {
@@ -248,6 +285,7 @@ a {
   font-size: 1.12rem;
   font-weight: 600;
   letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 .card-meta p {
@@ -273,7 +311,7 @@ a {
   font-size: 0.88rem;
   font-weight: 600;
   border: 1px solid transparent;
-  transition: transform 0.15s var(--ease), background 0.15s, color 0.15s;
+  transition: transform 0.15s var(--ease), background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .btn:active {
@@ -286,9 +324,18 @@ a {
   color: var(--ink);
 }
 
+.btn.ghost:hover {
+  border-color: var(--sand);
+  color: var(--sand);
+}
+
 .btn.solid {
-  background: var(--ink);
-  color: #fff;
+  background: var(--sand);
+  color: #0c0b0a;
+}
+
+.btn.solid:hover {
+  background: var(--sand-hot);
 }
 
 .btn.wide {
@@ -304,6 +351,7 @@ a {
   gap: 1rem;
   color: var(--mute);
   font-size: 0.82rem;
+  border-top: 1px solid var(--line);
 }
 
 /* Sticky WhatsApp */
@@ -321,10 +369,10 @@ a {
   padding: 0.75rem 1.1rem;
   border-radius: 999px;
   background: var(--wa);
-  color: #fff;
+  color: #06250f;
   font-weight: 650;
   font-size: 0.95rem;
-  box-shadow: 0 14px 34px rgba(18, 140, 126, 0.35);
+  box-shadow: 0 14px 34px rgba(37, 211, 102, 0.28);
 }
 
 /* Modal — screenshots only, no iframe */
@@ -332,8 +380,8 @@ a {
   position: fixed;
   inset: 0;
   z-index: 80;
-  background: rgba(10, 10, 10, 0.55);
-  backdrop-filter: blur(6px);
+  background: rgba(5, 4, 3, 0.78);
+  backdrop-filter: blur(8px);
   display: grid;
   place-items: end center;
   padding: 0;
@@ -343,10 +391,12 @@ a {
   width: min(100%, 980px);
   max-height: min(94vh, 900px);
   background: var(--paper);
+  border: 1px solid var(--line-2);
   border-radius: 18px 18px 0 0;
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+  box-shadow: var(--shadow);
   animation: up 0.28s var(--ease);
 }
 
@@ -368,11 +418,13 @@ a {
   gap: 0.75rem;
   padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .modal-head strong {
   display: block;
   font-size: 1rem;
+  color: var(--ink);
 }
 
 .modal-head span {
@@ -405,12 +457,17 @@ a {
   color: var(--mute);
 }
 
+.x:hover {
+  color: var(--ink);
+  border-color: var(--sand);
+}
+
 .modal-body {
   overflow: auto;
   padding: 1rem;
   display: grid;
   gap: 1rem;
-  background: var(--bg);
+  background: #100e0c;
 }
 
 .note {
@@ -424,7 +481,7 @@ a {
 }
 
 .note b {
-  color: var(--ink);
+  color: var(--sand);
   font-weight: 600;
 }
 
@@ -451,7 +508,7 @@ a {
   width: 100%;
   border-radius: 12px;
   border: 1px solid var(--line-2);
-  background: #111;
+  background: #0a0908;
   object-fit: cover;
   object-position: top center;
 }
