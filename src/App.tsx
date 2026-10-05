@@ -24,7 +24,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
   const [active, setActive] = useState<Template | null>(null);
-  const [iframeReady, setIframeReady] = useState(false);
 
   const list = useMemo(() => {
     if (filter === "All") return templates;
@@ -45,13 +44,6 @@ export default function App() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [active]);
-
-  useEffect(() => {
-    setIframeReady(false);
-    if (!active) return;
-    const t = window.setTimeout(() => setIframeReady(true), 4500);
-    return () => window.clearTimeout(t);
   }, [active]);
 
   const openPreview = (t: Template) => {
@@ -103,7 +95,7 @@ export default function App() {
               </h1>
               <p className="hero-lead">
                 {site.name} is a live library of premium interior-design website templates.
-                Pick a direction, preview it instantly, then commission a branded build for your studio.
+                Pick a direction, preview desktop & mobile screenshots, then open the live site and commission a branded build.
               </p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#templates">
@@ -128,7 +120,7 @@ export default function App() {
               </div>
               <div className="stat">
                 <strong>1 click</strong>
-                <span>Live iframe preview</span>
+                <span>Open live site</span>
               </div>
             </div>
           </div>
@@ -139,11 +131,11 @@ export default function App() {
             <div className="section-head">
               <div>
                 <p className="eyebrow">Template library</p>
-                <h2>Choose a look. Tap to open the live site.</h2>
+                <h2>Choose a look. Tap for screenshots & the live link.</h2>
               </div>
               <p>
-                Each card uses real desktop and mobile captures. Click any template to preview it in a dialog —
-                or open the live URL in a new tab.
+                Each card uses real desktop and mobile captures. Click any template to review the screenshots —
+                then open the live site in a new tab.
               </p>
             </div>
 
@@ -196,7 +188,7 @@ export default function App() {
                       ))}
                     </div>
                     <span className="card-cta">
-                      Preview live site <span aria-hidden="true">→</span>
+                      View screenshots <span aria-hidden="true">→</span>
                     </span>
                   </div>
                 </button>
@@ -323,33 +315,54 @@ export default function App() {
             className="modal"
             role="dialog"
             aria-modal="true"
-            aria-label={`${active.name} live preview`}
+            aria-label={`${active.name} screenshot preview`}
           >
             <div className="modal-bar">
               <div className="modal-title">
                 <strong>{active.name}</strong>
-                <span>{active.url.replace("https://", "")}</span>
+                <span>{active.vibe}</span>
               </div>
               <div className="modal-actions">
-                <a href={active.url} target="_blank" rel="noreferrer">
-                  Open live site
+                <a className="modal-open" href={active.url} target="_blank" rel="noreferrer">
+                  Open live site ↗
                 </a>
                 <button className="close" aria-label="Close preview" onClick={() => setActive(null)}>
                   ✕
                 </button>
               </div>
             </div>
-            <div className={`iframe-wrap${iframeReady ? " show-note" : ""}`}>
-              <iframe
-                title={`${active.name} live preview`}
-                src={active.url}
-                loading="eager"
-                referrerPolicy="no-referrer-when-downgrade"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-              />
-              <div className="iframe-note">
-                If the preview is blank, some hosts block iframes.{" "}
-                <a href={active.url} target="_blank" rel="noreferrer">
+
+            <div className="shot-preview">
+              <p className="shot-note">
+                You’re viewing desktop & mobile screenshots of this template.
+                Use <strong>Open live site</strong> to browse the real page in a new tab.
+              </p>
+
+              <div className="shot-layout">
+                <figure className="shot-desktop">
+                  <figcaption>Desktop</figcaption>
+                  <div className="shot-frame laptop-frame">
+                    <img src={active.desktop} alt={`${active.name} desktop screenshot`} />
+                  </div>
+                </figure>
+                <figure className="shot-mobile">
+                  <figcaption>Mobile</figcaption>
+                  <div className="shot-frame phone-frame">
+                    <img src={active.mobile} alt={`${active.name} mobile screenshot`} />
+                  </div>
+                </figure>
+              </div>
+
+              <div className="shot-footer">
+                <div className="shot-meta">
+                  <div className="palette" aria-hidden="true">
+                    {active.palette.map((c) => (
+                      <span key={c} className="swatch" style={{ background: c }} />
+                    ))}
+                  </div>
+                  <p>{active.blurb}</p>
+                </div>
+                <a className="btn btn-primary" href={active.url} target="_blank" rel="noreferrer">
                   Open live site ↗
                 </a>
               </div>
