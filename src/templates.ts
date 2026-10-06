@@ -7,13 +7,17 @@ export type Template = {
   tags: string[];
   palette: string[];
   vibe: string;
-  /** Relative to site base, e.g. shots/vista-desktop.png */
+  /** Full-size WebP for the preview modal (relative to site base) */
   desktop: string;
   mobile: string;
+  /** Small WebP thumbs for the cards */
+  desktopThumb: string;
+  mobileThumb: string;
 };
 
 /** Store paths WITHOUT base — App resolves with import.meta.env.BASE_URL */
-const shot = (name: string) => `shots/${name}`;
+const full = (name: string) => `shots/full/${name}.webp`;
+const thumb = (name: string) => `shots/thumb/${name}.webp`;
 
 export const templates: Template[] = [
   {
@@ -25,8 +29,10 @@ export const templates: Template[] = [
     tags: ["Renders", "Portfolio", "Dark"],
     palette: ["#1a1a1a", "#c9a66b", "#f5f0e8"],
     vibe: "Cinematic · Render-first",
-    desktop: shot("accurate-desktop.png"),
-    mobile: shot("accurate-mobile.png"),
+    desktop: full("accurate-desktop"),
+    desktopThumb: thumb("accurate-desktop"),
+    mobile: full("accurate-mobile"),
+    mobileThumb: thumb("accurate-mobile"),
   },
   {
     id: "vista",
@@ -37,8 +43,10 @@ export const templates: Template[] = [
     tags: ["Bold", "Architecture", "Cobalt"],
     palette: ["#0a0a0a", "#ffffff", "#2f5bff"],
     vibe: "Graphic · Point of view",
-    desktop: shot("vista-desktop.png"),
-    mobile: shot("vista-mobile.png"),
+    desktop: full("vista-desktop"),
+    desktopThumb: thumb("vista-desktop"),
+    mobile: full("vista-mobile"),
+    mobileThumb: thumb("vista-mobile"),
   },
   {
     id: "lumen",
@@ -49,8 +57,10 @@ export const templates: Template[] = [
     tags: ["Quiet luxury", "Editorial", "Gold"],
     palette: ["#1c1b19", "#f4efe6", "#c4a574"],
     vibe: "Editorial · Soft gold",
-    desktop: shot("lumen-desktop.png"),
-    mobile: shot("lumen-mobile.png"),
+    desktop: full("lumen-desktop"),
+    desktopThumb: thumb("lumen-desktop"),
+    mobile: full("lumen-mobile"),
+    mobileThumb: thumb("lumen-mobile"),
   },
   {
     id: "kaleidos",
@@ -61,8 +71,10 @@ export const templates: Template[] = [
     tags: ["Colour", "Experimental", "Bold"],
     palette: ["#2a1840", "#ff6b4a", "#c8ff3d"],
     vibe: "Colour-led · Gallery",
-    desktop: shot("kaleidos-desktop.png"),
-    mobile: shot("kaleidos-mobile.png"),
+    desktop: full("kaleidos-desktop"),
+    desktopThumb: thumb("kaleidos-desktop"),
+    mobile: full("kaleidos-mobile"),
+    mobileThumb: thumb("kaleidos-mobile"),
   },
   {
     id: "clickdes",
@@ -73,8 +85,10 @@ export const templates: Template[] = [
     tags: ["Portfolio", "Clean", "Designer"],
     palette: ["#111111", "#f7f7f5", "#888888"],
     vibe: "Portfolio · Minimal",
-    desktop: shot("clickdes-desktop.png"),
-    mobile: shot("clickdes-mobile.png"),
+    desktop: full("clickdes-desktop"),
+    desktopThumb: thumb("clickdes-desktop"),
+    mobile: full("clickdes-mobile"),
+    mobileThumb: thumb("clickdes-mobile"),
   },
   {
     id: "forma04",
@@ -85,8 +99,10 @@ export const templates: Template[] = [
     tags: ["System", "Colour blocks", "Modern"],
     palette: ["#111111", "#f5e84a", "#ff6ad5"],
     vibe: "System · Pop accents",
-    desktop: shot("forma04-desktop.png"),
-    mobile: shot("forma04-mobile.png"),
+    desktop: full("forma04-desktop"),
+    desktopThumb: thumb("forma04-desktop"),
+    mobile: full("forma04-mobile"),
+    mobileThumb: thumb("forma04-mobile"),
   },
   {
     id: "atelier-forma",
@@ -97,8 +113,10 @@ export const templates: Template[] = [
     tags: ["Warm", "Studio", "Terracotta"],
     palette: ["#2a211c", "#f3ebe0", "#c45c3e"],
     vibe: "Warm atelier · Craft",
-    desktop: shot("atelier-forma-desktop.png"),
-    mobile: shot("atelier-forma-mobile.png"),
+    desktop: full("atelier-forma-desktop"),
+    desktopThumb: thumb("atelier-forma-desktop"),
+    mobile: full("atelier-forma-mobile"),
+    mobileThumb: thumb("atelier-forma-mobile"),
   },
   {
     id: "maison-noor",
@@ -109,7 +127,9 @@ export const templates: Template[] = [
     tags: ["Bilingual", "Pitch", "Brass"],
     palette: ["#2c2118", "#f0e6d8", "#b8956c"],
     vibe: "Pitch-ready · نور",
-    desktop: shot("maison-noor-desktop.png"),
-    mobile: shot("maison-noor-mobile.png"),
+    desktop: full("maison-noor-desktop"),
+    desktopThumb: thumb("maison-noor-desktop"),
+    mobile: full("maison-noor-mobile"),
+    mobileThumb: thumb("maison-noor-mobile"),
   },
 ];

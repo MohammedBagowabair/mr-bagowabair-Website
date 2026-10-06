@@ -36,7 +36,10 @@ export default function App() {
 
   const openPreview = (t: Template) => {
     setActive(t);
-    setTab("live");
+    // On phones default to lightweight screenshots; the live iframe is only
+    // created if the user taps "Live site".
+    const isPhone = window.matchMedia("(max-width: 719px)").matches;
+    setTab(isPhone ? "shots" : "live");
     setIframeLoaded(false);
     setIframeFailed(false);
   };
@@ -46,10 +49,12 @@ export default function App() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActive(null);
     };
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
     document.body.classList.add("modal-open");
     window.addEventListener("keydown", onKey);
     return () => {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", onKey);
@@ -108,7 +113,7 @@ export default function App() {
           </div>
 
           <div className="grid">
-            {list.map((t) => (
+            {list.map((t, i) => (
               <article key={t.id} className="card">
                 <button
                   type="button"
@@ -117,10 +122,25 @@ export default function App() {
                   aria-label={`Preview ${t.name}`}
                 >
                   <div className="desk">
-                    <img src={shotSrc(t.desktop)} alt="" loading="lazy" />
+                    <img
+                      src={shotSrc(t.desktopThumb)}
+                      alt=""
+                      width={720}
+                      height={450}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      fetchPriority={i === 0 ? "high" : "auto"}
+                      decoding="async"
+                    />
                   </div>
                   <div className="phone">
-                    <img src={shotSrc(t.mobile)} alt="" loading="lazy" />
+                    <img
+                      src={shotSrc(t.mobileThumb)}
+                      alt=""
+                      width={240}
+                      height={480}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
                   </div>
                 </button>
                 <div className="card-meta">
@@ -244,6 +264,9 @@ export default function App() {
                       <img
                         src={desktopSrc}
                         alt={`${active.name} desktop`}
+                        width={1440}
+                        height={900}
+                        decoding="async"
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).classList.add("broken");
                         }}
@@ -254,6 +277,9 @@ export default function App() {
                       <img
                         src={mobileSrc}
                         alt={`${active.name} mobile`}
+                        width={390}
+                        height={844}
+                        decoding="async"
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).classList.add("broken");
                         }}
